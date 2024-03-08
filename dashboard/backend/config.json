@@ -49,14 +49,14 @@
     "dummy1": "203.253.128.161",
     "dummy3": "localhost",
     "domains": {
-      "WEBPORTAL": "portal.iotdefine.org",
-      "DASHBOARD": "dashboard.iotdefine.org",
-      "OTA": "ota.iotdefine.org",
-      "SNS": "sns.iotdefine.org",
-      "RES": "res.iotdefine.org"
+      "WEBPORTAL": "iotocean.org:8881",
+      "DASHBOARD": "iotocean.org:7580",
+      "OTA": "iotocean.org:8730",
+      "SNS": "iotocean.org:7597",
+      "RES": "iotocean.org:7575"
     },
     "cookie": {
-      "domain": ".iotdefine.org"
+      "domain": ".iotocean.org"
     }
   }
 }

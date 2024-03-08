@@ -9,14 +9,14 @@
     "db_password": "ketiiot!@34",
     "db_database": "DB_KETI_IOT_RESOURCE_MONITOR",
     "domains": {
-      "WEBPORTAL": "portal.iotdefine.org",
-      "DASHBOARD": "dashboard.iotdefine.org",
-      "OTA": "ota.iotdefine.org",
-      "SNS": "sns.iotdefine.org",
-      "RES": "res.iotdefine.org"
+      "WEBPORTAL": "iotocean.org:8881",
+      "DASHBOARD": "iotocean.org:7580",
+      "OTA": "iotocean.org:8730",
+      "SNS": "iotocean.org:7597",
+      "RES": "iotocean.org:7575"
     },
     "cookie": {
-      "domain": ".iotdefine.org"
+      "domain": ".iotocean.org"
     }
   }
 }
