@@ -1,22 +1,22 @@
 {
-  "default" : {
-    "node" : {
-      "port" : 7597
-    },     
+  "default": {
+    "node": {
+      "port": 7597
+    },
     "mobius": {
       "host": "http://203.253.128.161",
       "mqtt": "mqtt://203.253.128.161",
       "port": "7579",
       "csebase": "Mobius"
     },
-    "mobius_sub_prefix" : "KETI_SNS",
-    "system_name" : "KETI_SNS_AGENT_MANAGER",
+    "mobius_sub_prefix": "KETI_SNS",
+    "system_name": "KETI_SNS_AGENT_MANAGER",
     "jwt": {
-      "JWT_ISSUER" : "SYNCTECHNO",
-      "ACCESS_SUBJECT" : "ACCESS",
-      "REFRESH_SUBJECT" : "REFRESH",
-      "ACCESS_EXP" : "12h",
-      "REFRESH_EXP" : "30d",
+      "JWT_ISSUER": "SYNCTECHNO",
+      "ACCESS_SUBJECT": "ACCESS",
+      "REFRESH_SUBJECT": "REFRESH",
+      "ACCESS_EXP": "12h",
+      "REFRESH_EXP": "30d",
       "SECRET": "Z29f/iImdZ5QrAaHW1xGQqcvaWrLmmQw8pmQGMtYZqBJAL9WLnWa67qyq8H9phVX43plaSWQ/Ab1rPdoBhKS9Q=="
     },
     "mongo": {
@@ -25,6 +25,16 @@
       "database": "Bot_Mgmt",
       "user": "telebot",
       "password": "telebot!@"
+    },
+    "domains": {
+      "WEBPORTAL": "portal.iotdefine.org",
+      "DASHBOARD": "dashboard.iotdefine.org",
+      "OTA": "ota.iotdefine.org",
+      "SNS": "sns.iotdefine.org",
+      "RES": "res.iotdefine.org"
+    },
+    "cookie": {
+      "domain": ".iotdefine.org"
     }
   }
 }

@@ -1,12 +1,22 @@
 {
-  "default" : {
-    "node" : {
-      "port" : 7575
+  "default": {
+    "node": {
+      "port": 7575
     },
-    "db_host" : "localhost",
-    "db_port" : "3306",
-    "db_user" : "keti.iot",
-    "db_password" : "ketiiot!@34",
-    "db_database" : "DB_KETI_IOT_RESOURCE_MONITOR"
+    "db_host": "localhost",
+    "db_port": "3306",
+    "db_user": "keti.iot",
+    "db_password": "ketiiot!@34",
+    "db_database": "DB_KETI_IOT_RESOURCE_MONITOR",
+    "domains": {
+      "WEBPORTAL": "portal.iotdefine.org",
+      "DASHBOARD": "dashboard.iotdefine.org",
+      "OTA": "ota.iotdefine.org",
+      "SNS": "sns.iotdefine.org",
+      "RES": "res.iotdefine.org"
+    },
+    "cookie": {
+      "domain": ".iotdefine.org"
+    }
   }
 }
