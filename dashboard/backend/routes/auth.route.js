@@ -1,16 +1,13 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-var authManager = require('../managers/auth.manager.js');
+var authManager = require("../managers/auth.manager.js");
 
 /**
  * /auth/token	POST    Login
  * /auth/token	GET     Refresh access token
  * /auth/token	DELETE  Logout
  */
-
-
-
 
 /*
 
@@ -45,35 +42,35 @@ params: {
  *  	ID not found or Password mismatched
  *  	Already logged in
  */
-router.post('/token',   (req, res, next)=>{
+router.post("/token", (req, res, next) => {
   const userId = req.body.userId;
   const passwd = req.body.password;
   const type = req.body.type;
 
   //  TODO check parameter
-  const secret = req.app.get('jwt-secret')
+  const secret = req.app.get("jwt-secret");
 
-  authManager.login(userId, passwd, type, secret)
-    .then((tokens)=>{
-      res.status(200).json(tokens)
+  authManager
+    .login(userId, passwd, type, secret)
+    .then((tokens) => {
+      res.status(200).json(tokens);
     })
 
-    .catch((err)=>{
-      res.status(401).json(err)
-    })
+    .catch((err) => {
+      res.status(401).json(err);
+    });
 });
 
+router.use("/check", authManager.authCheck);
+router.get("/check", authManager.check);
 
-router.use('/check', authManager.authCheck);
-router.get('/check', authManager.check);
-
-router.delete('/', authManager.userSignOut);
-router.post('/re', authManager.tokenReIssue);
-router.get('/info', function(req, res, next) {
+router.delete("/", authManager.userSignOut);
+router.post("/re", authManager.tokenReIssue);
+router.get("/info", function (req, res, next) {
   var info = {};
   info.serviceUrl = CONFIG.domains;
-  info.serviceUrl['domain'] = CONFIG.cookie.domain;
+  info.serviceUrl["domain"] = CONFIG.cookie.domain;
 
-  res.status(200).json(info)
-})
+  res.status(200).json(info);
+});
 module.exports = router;

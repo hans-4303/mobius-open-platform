@@ -1,19 +1,19 @@
-var router = require('express').Router();
-var aeController = require('../controllers/aeMgmtController');
+var router = require("express").Router();
+var aeController = require("../controllers/aeMgmtController");
 
-router.post('/', aeController.fileUpload, aeController.addAE);
+router.post("/", aeController.fileUpload, aeController.addAE);
 
-router.get('/', aeController.getAE);
+router.get("/", aeController.getAE);
 
-router.get('/list', aeController.getAEList);
+router.get("/list", aeController.getAEList);
 
-router.put('/', aeController.modifyAE);
+router.put("/", aeController.modifyAE);
 
-router.delete('/', aeController.removeAE);
+router.delete("/", aeController.removeAE);
 
-router.post('/patch', aeController.startPatch);
+router.post("/patch", aeController.startPatch);
 
-router.put('/patch', aeController.updatePatchDate);
+router.put("/patch", aeController.updatePatchDate);
 
-router.post('/upload',  aeController.fileUpload, aeController.uploadPatchFile);
+router.post("/upload", aeController.fileUpload, aeController.uploadPatchFile);
 module.exports = router;

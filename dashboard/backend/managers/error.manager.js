@@ -1,5 +1,4 @@
-'use strict';
-
+"use strict";
 
 function PlatformError(source, code, message) {
   this.source = source;
@@ -9,24 +8,22 @@ function PlatformError(source, code, message) {
 PlatformError.prototype = new Error();
 PlatformError.prototype.constructor = PlatformError;
 
-
 PlatformError.SOURCE = {
-  "AUTH": {
-    "LOGIN": "auth.login"
+  AUTH: {
+    LOGIN: "auth.login",
   },
-  "USER": {
-    "SIGNIN": "user.signin"
+  USER: {
+    SIGNIN: "user.signin",
   },
-  "WIDGET": {
-    "LIST": "widget.list"
+  WIDGET: {
+    LIST: "widget.list",
   },
-  "DATASOURCE": {
-    "LIST": "datasource.list"
+  DATASOURCE: {
+    LIST: "datasource.list",
   },
-  "M2M": {
-    "USERAE": "m2m.userae"
-  }
+  M2M: {
+    USERAE: "m2m.userae",
+  },
 };
-
 
 module.exports = PlatformError;

@@ -6,31 +6,33 @@ import { resolve } from "url";
 export class UrlStore {
   public portalURL = "";
   public serviceUrl = {
-    mobiusState : "",
-    deviceManage : "",
-    accessProtect : "",
-    dataBrowser : "",
-    resmon : "",
-    ota : "",
-    sns : "",
-    dashboard : "",
-  }
+    mobiusState: "",
+    deviceManage: "",
+    accessProtect: "",
+    dataBrowser: "",
+    resmon: "",
+    ota: "",
+    sns: "",
+    dashboard: "",
+  };
   public serverURL = "";
   public serverSocket = "";
   public domain = "";
-  
-  private httpClient : HttpClient;
-  constructor(handler : HttpBackend) {
+
+  private httpClient: HttpClient;
+  constructor(handler: HttpBackend) {
     this.httpClient = new HttpClient(handler);
   }
-  
-  loadURL() : Promise<any> {
-    const promise = this.httpClient.get<any>('./api/auth/info', {
-      responseType : "json"
-    }).toPromise()
-      .then(info => {
+
+  loadURL(): Promise<any> {
+    const promise = this.httpClient
+      .get<any>("./api/auth/info", {
+        responseType: "json",
+      })
+      .toPromise()
+      .then((info) => {
         var serviceUrl = info.serviceUrl;
-        
+
         this.serviceUrl.mobiusState = `http://${serviceUrl.WEBPORTAL}/#!/dashboard`;
         this.serviceUrl.deviceManage = `http://${serviceUrl.WEBPORTAL}/#!/device-list`;
         this.serviceUrl.accessProtect = `http://${serviceUrl.WEBPORTAL}/#!/acp-list/`;
@@ -45,7 +47,7 @@ export class UrlStore {
 
         this.serverSocket = this.serviceUrl.ota;
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
 

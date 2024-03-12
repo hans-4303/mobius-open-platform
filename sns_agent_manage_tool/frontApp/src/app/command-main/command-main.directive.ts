@@ -1,9 +1,8 @@
-import { Directive, ViewContainerRef } from '@angular/core';
-
+import { Directive, ViewContainerRef } from "@angular/core";
 
 @Directive({
-    selector : '[command-view]'
+  selector: "[command-view]",
 })
-export class CommandViewDirective{
-    constructor(public viewContainerRef : ViewContainerRef){}
+export class CommandViewDirective {
+  constructor(public viewContainerRef: ViewContainerRef) {}
 }

@@ -1,18 +1,14 @@
 /**
- * 
+ *
  */
 
 //var dbConnection = require('../util/db-connection');
-var Promise = require('bluebird');
-var debug = require('debug')('keti');
+var Promise = require("bluebird");
+var debug = require("debug")("keti");
 
+var Setting = function () {};
 
-var Setting = function() {
-
-}
-
-Setting.listSettings = function(userId) {
-  
+Setting.listSettings = function (userId) {
   /*
   return dbConnection.getConnection()
     .then(function(conn) {
@@ -28,7 +24,6 @@ Setting.listSettings = function(userId) {
       throw err;
     });
   */
-}
-
+};
 
 module.exports = Setting;

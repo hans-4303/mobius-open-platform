@@ -1,116 +1,126 @@
-(function(){
-  'use strict';
+(function () {
+  "use strict";
 
   /*
   'color.picker.core',
 
    */
   angular
-    .module('dashboard', ['ui.router', 'LocalStorageModule', 'ngMaterial', 'hljs', 'ngDraggable', 'mdSteppers', 'SmoothScrollbar', 'gridshore.c3js.chart', 'ngCookies', 'angular-jwt'])
+    .module("dashboard", [
+      "ui.router",
+      "LocalStorageModule",
+      "ngMaterial",
+      "hljs",
+      "ngDraggable",
+      "mdSteppers",
+      "SmoothScrollbar",
+      "gridshore.c3js.chart",
+      "ngCookies",
+      "angular-jwt",
+    ])
     .config(config)
-    .controller('mainController', MainController)
+    .controller("mainController", MainController)
     .run(run);
 
-
-
-  function config($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, localStorageServiceProvider, hljsServiceProvider) {
-
-    $urlRouterProvider.otherwise('/login');
+  function config(
+    $stateProvider,
+    $urlRouterProvider,
+    $mdThemingProvider,
+    $httpProvider,
+    localStorageServiceProvider,
+    hljsServiceProvider
+  ) {
+    $urlRouterProvider.otherwise("/login");
 
     $stateProvider
 
-      .state('login', {
-        url: '/login?os&token',
+      .state("login", {
+        url: "/login?os&token",
         views: {
-          '': {
-            templateUrl: './app/layout/public.layout.html'
+          "": {
+            templateUrl: "./app/layout/public.layout.html",
           },
-          'content@login': {
-            templateUrl: './app/user/login.html'
-          }
-        }
+          "content@login": {
+            templateUrl: "./app/user/login.html",
+          },
+        },
       })
 
-      .state('signin', {
-        url: '/signin',
+      .state("signin", {
+        url: "/signin",
         views: {
-          '': {
-            templateUrl: './app/layout/public.layout.html'
+          "": {
+            templateUrl: "./app/layout/public.layout.html",
           },
-          'content@signin': {
-            templateUrl: './app/user/signin.html'
-          }
-        }
+          "content@signin": {
+            templateUrl: "./app/user/signin.html",
+          },
+        },
       })
 
-      .state('password-reset', {
-        url: '/password-reset',
+      .state("password-reset", {
+        url: "/password-reset",
         views: {
-          '': {
-            templateUrl: './app/layout/public.layout.html'
+          "": {
+            templateUrl: "./app/layout/public.layout.html",
           },
-          'content@password-reset': {
-            templateUrl: './app/auth/password.reset.html'
-          }
-        }
+          "content@password-reset": {
+            templateUrl: "./app/auth/password.reset.html",
+          },
+        },
       })
 
-      .state('password-change', {
-        url: '/password-change',
+      .state("password-change", {
+        url: "/password-change",
         views: {
-          '': {
-            templateUrl: './app/layout/public.layout.html'
+          "": {
+            templateUrl: "./app/layout/public.layout.html",
           },
-          'content@password-change': {
-            templateUrl: './app/auth/password.change.html'
-          }
-        }
+          "content@password-change": {
+            templateUrl: "./app/auth/password.change.html",
+          },
+        },
       })
 
-
-      .state('dashboard', {
-        url: '/dashboard',
+      .state("dashboard", {
+        url: "/dashboard",
         views: {
-          '': {
-            templateUrl: './app/layout/personal.layout.html'
+          "": {
+            templateUrl: "./app/layout/personal.layout.html",
           },
-          'content@dashboard': {
-            templateUrl: './app/dashboard/dashboard.html'
-          }
-        }
+          "content@dashboard": {
+            templateUrl: "./app/dashboard/dashboard.html",
+          },
+        },
       })
 
-
-
-      .state('device-all', {
-        url: '/device-all',
+      .state("device-all", {
+        url: "/device-all",
         views: {
-          '': {
-            templateUrl: './app/layout/personal.layout.html'
+          "": {
+            templateUrl: "./app/layout/personal.layout.html",
           },
-          'content@device-all': {
-            templateUrl: './app/device/device.all.html'
-          }
-        }
+          "content@device-all": {
+            templateUrl: "./app/device/device.all.html",
+          },
+        },
       })
 
-
-      .state('edit-widget', {
-        url: '/edit-widget/:widgetId',
+      .state("edit-widget", {
+        url: "/edit-widget/:widgetId",
         params: {
-          widgetType: 'gauge',
-          mode: 'create'
+          widgetType: "gauge",
+          mode: "create",
         },
         views: {
-          '': {
-            templateUrl: './app/layout/personal.layout.html'
+          "": {
+            templateUrl: "./app/layout/personal.layout.html",
           },
-          'content@edit-widget': {
-            templateUrl: './app/datasource/datasource.html'
-          }
-        }
+          "content@edit-widget": {
+            templateUrl: "./app/datasource/datasource.html",
+          },
+        },
       })
-
 
       // .state('datasource-list', {
       //   url: '/datasource-list',
@@ -124,52 +134,62 @@
       //   }
       // })
 
-
-
-      .state('add-datasource', {
-        url: '/add-datasource',
+      .state("add-datasource", {
+        url: "/add-datasource",
         views: {
-          '': {
-            templateUrl: './app/layout/personal.layout.html'
+          "": {
+            templateUrl: "./app/layout/personal.layout.html",
           },
-          'content@add-datasource': {
-            templateUrl: './app/datasource/add.datasource.html'
-          }
-        }
-      })
+          "content@add-datasource": {
+            templateUrl: "./app/datasource/add.datasource.html",
+          },
+        },
+      });
 
-      
-      
-      ;
-      
     // $httpProvider.interceptors.push('tokenInjector')
 
     localStorageServiceProvider
-      .setPrefix('dashboard')
-      .setStorageType('localStorage')
+      .setPrefix("dashboard")
+      .setStorageType("localStorage")
       .setNotify(true, true);
 
-    
-
-    $mdThemingProvider.theme('dashboard') 
-    .primaryPalette('grey')
-    .accentPalette('orange')
-    .backgroundPalette('grey');
+    $mdThemingProvider
+      .theme("dashboard")
+      .primaryPalette("grey")
+      .accentPalette("orange")
+      .backgroundPalette("grey");
 
     hljsServiceProvider.setOptions({
       // replace tab with 4 spaces
-      tabReplace: '  ',
-      languages: ['javascript']
+      tabReplace: "  ",
+      languages: ["javascript"],
     });
+  }
 
-  };
+  //  controller inject
+  MainController.$inject = [
+    "$scope",
+    "$state",
+    "$stateParams",
+    "$mdSidenav",
+    "$mdDialog",
+    "localStorageService",
+    "apiService",
+    "notificationService",
+    "$cookies",
+  ];
 
-    //  controller inject
-  MainController.$inject = ['$scope', '$state', '$stateParams', '$mdSidenav', '$mdDialog', 'localStorageService', 'apiService', 'notificationService', '$cookies'];
-
-
-  function MainController($scope, $state, $stateParams, $mdSidenav, $mdDialog, localStorageService, apiService, notificationService, $cookies) {
-
+  function MainController(
+    $scope,
+    $state,
+    $stateParams,
+    $mdSidenav,
+    $mdDialog,
+    localStorageService,
+    apiService,
+    notificationService,
+    $cookies
+  ) {
     $scope.init = _init;
 
     $scope.openToolbarMenu = _openToolbarMenu;
@@ -185,198 +205,188 @@
 
     $scope.logout = _logout;
 
-
     function __initSocketChannel(token) {
-      if(window.SOCKET) {
+      if (window.SOCKET) {
         window.SOCKET.close();
       }
       window.SOCKET = io.connect();
-      window.SOCKET.on('dashboard.push', function(data){
+      window.SOCKET.on("dashboard.push", function (data) {
         notificationService.pushHandler(data);
       });
-      window.SOCKET.on('connected', function (data) {
-
-        window.SOCKET.emit('start', {atkn: token});
+      window.SOCKET.on("connected", function (data) {
+        window.SOCKET.emit("start", { atkn: token });
       });
     }
-
 
     function _init() {
+      console.log($stateParams);
 
-      console.log( $stateParams );
+      $scope.loginUser = localStorageService.get("loginUser");
+      $scope.loginUserName = $scope.loginUser ? $scope.loginUser.userName : "";
 
-      $scope.loginUser = localStorageService.get('loginUser');
-      $scope.loginUserName = $scope.loginUser ? $scope.loginUser.userName : '';
-
-
-      var atkn = $cookies.get('ocean-ac-token');
+      var atkn = $cookies.get("ocean-ac-token");
       __initSocketChannel(atkn);
 
+      $scope.$on(
+        "LocalStorageModule.notification.removeitem",
+        function (event, params) {
+          if (params.key === "loginUser") {
+            $state.go("intro");
+          }
 
-
-      $scope.$on("LocalStorageModule.notification.removeitem", function (event, params) {
-        if(params.key === 'loginUser') {
-
-          $state.go('intro');
-        }
-
-        if(params.key === 'ocean-ac-token') {
-          if(window.SOCKET) {
-            window.SOCKET.close();
-            window.SOCKET = null;
+          if (params.key === "ocean-ac-token") {
+            if (window.SOCKET) {
+              window.SOCKET.close();
+              window.SOCKET = null;
+            }
           }
         }
-      });
+      );
 
-      $scope.$on("LocalStorageModule.notification.setitem", function (event, params) {
-        if(params.key === 'loginUser') {
-          var loginUser = JSON.parse(params.newvalue);
-          $scope.loginUser = loginUser;
-          $scope.loginUserName = $scope.loginUser.userName;
+      $scope.$on(
+        "LocalStorageModule.notification.setitem",
+        function (event, params) {
+          if (params.key === "loginUser") {
+            var loginUser = JSON.parse(params.newvalue);
+            $scope.loginUser = loginUser;
+            $scope.loginUserName = $scope.loginUser.userName;
+          }
+
+          if (params.key === "ocean-ac-token") {
+            __initSocketChannel(params.newvalue);
+          }
         }
-
-        if(params.key === 'ocean-ac-token') {
-          __initSocketChannel(params.newvalue);
-        }
-      });
-
+      );
     }
-
 
     function _openLoginUserMenu($mdMenu, ev) {
       $mdMenu.open(ev);
     }
 
-
     function _openToolbarMenu($mdMenu, ev) {
       $mdMenu.open(ev);
     }
 
-   function _openLanguageMenu($mdMenu, ev) {
+    function _openLanguageMenu($mdMenu, ev) {
       $mdMenu.open(ev);
     }
 
-
     function _gotoSignin() {
-      $state.go('signin');
+      $state.go("signin");
     }
 
     function _gotoLogin() {
-      $state.go('login');
+      $state.go("login");
     }
 
     function _logout() {
       $scope.loginUser = null;
-      localStorageService.remove('ocean-ac-token', 'refreshToken', 'loginUser');
-      $state.go('login');
+      localStorageService.remove("ocean-ac-token", "refreshToken", "loginUser");
+      $state.go("login");
     }
 
-
     function _toggleLanguage() {
-      var languageSetting = 'de';
+      var languageSetting = "de";
 
-      if($scope.loginUser) {
-        languageSetting = $scope.loginUser.language || 'de';
+      if ($scope.loginUser) {
+        languageSetting = $scope.loginUser.language || "de";
+      } else {
+        languageSetting = localStorageService.get("language") || "de";
       }
-      else {
-        languageSetting = localStorageService.get('language') || 'de';
-      }
 
-      languageSetting = (languageSetting === 'de' ? 'us' : 'de');
+      languageSetting = languageSetting === "de" ? "us" : "de";
 
-      if($scope.loginUser) {
+      if ($scope.loginUser) {
         var update = {
-          language: languageSetting
+          language: languageSetting,
         };
-        apiService.updateUserProfile(update)
-          .then(function(userInfo){
-            $scope.$apply(function(){
-              $scope.loginUser.language = languageSetting;
-            });
-          })
-      }
-      else {
-        localStorageService.set('language', languageSetting);
+        apiService.updateUserProfile(update).then(function (userInfo) {
+          $scope.$apply(function () {
+            $scope.loginUser.language = languageSetting;
+          });
+        });
+      } else {
+        localStorageService.set("language", languageSetting);
       }
     }
 
     function _languageFlagClass(toggle) {
-      var languageSetting = 'de';
+      var languageSetting = "de";
 
-      if($scope.loginUser) {
-        languageSetting = $scope.loginUser.language || 'de';
-      }
-      else {
-        languageSetting = localStorageService.get('language') || 'de';
-      }
-
-      if(toggle) {
-        languageSetting = (languageSetting === 'de' ? 'us' : 'de');
+      if ($scope.loginUser) {
+        languageSetting = $scope.loginUser.language || "de";
+      } else {
+        languageSetting = localStorageService.get("language") || "de";
       }
 
-      return 'flag-icon-' + languageSetting;
+      if (toggle) {
+        languageSetting = languageSetting === "de" ? "us" : "de";
+      }
+
+      return "flag-icon-" + languageSetting;
     }
 
-
     function _languageFlagName(toggle) {
-      var languageSetting = 'de';
+      var languageSetting = "de";
 
-      if($scope.loginUser) {
-        languageSetting = $scope.loginUser.language || 'de';
-      }
-      else {
-        languageSetting = localStorageService.get('language') || 'de';
-      }
-
-      if(toggle) {
-        languageSetting = (languageSetting === 'de' ? 'us' : 'de');
+      if ($scope.loginUser) {
+        languageSetting = $scope.loginUser.language || "de";
+      } else {
+        languageSetting = localStorageService.get("language") || "de";
       }
 
-      return languageSetting === 'de' ? "Germany" : "English";
+      if (toggle) {
+        languageSetting = languageSetting === "de" ? "us" : "de";
+      }
+
+      return languageSetting === "de" ? "Germany" : "English";
     }
   }
 
-
   function run($rootScope, $location, authService) {
     window.API_BASE_URL = "";
-    authService.getSysInfo()
-      .then(function(info){
-        var serviceUrl = info.serviceUrl;
-        var s = {};
-        s.mobiusState = `http://${serviceUrl.WEBPORTAL}/#!/dashboard`;
-        s.deviceManage = `http://${serviceUrl.WEBPORTAL}/#!/device-list`;
-        s.accessProtect = `http://${serviceUrl.WEBPORTAL}/#!/acp-list/`;
-        s.dataBrowser = `http://${serviceUrl.WEBPORTAL}/#!/data-browser/"`;
-        s.resmon = `http://${serviceUrl.RES}`;
-        s.ota = `http://${serviceUrl.OTA}`;
-        s.sns = `http://${serviceUrl.SNS}`;
-        s.dashboard = `http://${serviceUrl.DASHBOARD}`;
-        $rootScope.serviceUrl = s;
-        $rootScope.serverUrl = `http://${serviceUrl.WEBPORTAL}`;
-        $rootScope.domain = serviceUrl.domain;
-      })
-
+    authService.getSysInfo().then(function (info) {
+      var serviceUrl = info.serviceUrl;
+      var s = {};
+      s.mobiusState = `http://${serviceUrl.WEBPORTAL}/#!/dashboard`;
+      s.deviceManage = `http://${serviceUrl.WEBPORTAL}/#!/device-list`;
+      s.accessProtect = `http://${serviceUrl.WEBPORTAL}/#!/acp-list/`;
+      s.dataBrowser = `http://${serviceUrl.WEBPORTAL}/#!/data-browser/"`;
+      s.resmon = `http://${serviceUrl.RES}`;
+      s.ota = `http://${serviceUrl.OTA}`;
+      s.sns = `http://${serviceUrl.SNS}`;
+      s.dashboard = `http://${serviceUrl.DASHBOARD}`;
+      $rootScope.serviceUrl = s;
+      $rootScope.serverUrl = `http://${serviceUrl.WEBPORTAL}`;
+      $rootScope.domain = serviceUrl.domain;
+    });
 
     if (SVGElement && SVGElement.prototype) {
-
       SVGElement.prototype.hasClass = function (className) {
-        return new RegExp('(\\s|^)' + className + '(\\s|$)').test(this.getAttribute('class'));
+        return new RegExp("(\\s|^)" + className + "(\\s|$)").test(
+          this.getAttribute("class")
+        );
       };
 
       SVGElement.prototype.addClass = function (className) {
         if (!this.hasClass(className)) {
-          this.setAttribute('class', this.getAttribute('class') + ' ' + className);
+          this.setAttribute(
+            "class",
+            this.getAttribute("class") + " " + className
+          );
         }
       };
 
       SVGElement.prototype.removeClass = function (className) {
-        var currentClass = this.getAttribute('class');
-        if(!currentClass)
-          return;
+        var currentClass = this.getAttribute("class");
+        if (!currentClass) return;
 
-        var removedClass = this.getAttribute('class').replace(new RegExp('(\\s|^)' + className + '(\\s|$)', 'g'), '$2');
+        var removedClass = this.getAttribute("class").replace(
+          new RegExp("(\\s|^)" + className + "(\\s|$)", "g"),
+          "$2"
+        );
         if (this.hasClass(className)) {
-          this.setAttribute('class', removedClass);
+          this.setAttribute("class", removedClass);
         }
       };
 
@@ -387,9 +397,6 @@
           this.addClass(className);
         }
       };
-
     }
   }
-
 })();
-

@@ -1,22 +1,18 @@
-const nodemailer = require('nodemailer');
-
-
+const nodemailer = require("nodemailer");
 
 function _generateEmailOptions(sendmailDoc) {
-
   var mailOption = {
-    from: 'No-reply <noreply@dashboard.com>',
+    from: "No-reply <noreply@dashboard.com>",
     to: "thyun.kim@synctechno.com",
     subject: "Test Main",
-    html: "<div>test mail</div>"
+    html: "<div>test mail</div>",
   };
 
-  var mailContents = '<h1>test</h1>';
+  var mailContents = "<h1>test</h1>";
   mailOption.html = mailContents;
 
   return mailOption;
 }
-
 
 /***
  * OFFICE 365 SMTP
@@ -31,33 +27,29 @@ function _generateEmailOptions(sendmailDoc) {
  *
  */
 var SENDMAIL_CONFIG = {
-  "host": "smtp.office365.com",
-  "port": 587,
-  "secure": false,
-  "auth": {
-    "user": "noreply@dashboard.com",
-    "pass": "Wok08770"
+  host: "smtp.office365.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "noreply@dashboard.com",
+    pass: "Wok08770",
   },
-  "tls": {
-    "ciphers": 'SSLv3'
-  }
+  tls: {
+    ciphers: "SSLv3",
+  },
 };
 
 var transporter = nodemailer.createTransport(SENDMAIL_CONFIG);
 var mailOption = _generateEmailOptions();
 
-
 try {
   transporter.sendMail(mailOption, function (err, info) {
     if (err) {
-
-      console.log('Send Mail error', err.message);
-    }
-    else {
-      console.log( "SUCCESS");
+      console.log("Send Mail error", err.message);
+    } else {
+      console.log("SUCCESS");
     }
   });
-}
-catch(ex) {
+} catch (ex) {
   console.log(ex);
 }

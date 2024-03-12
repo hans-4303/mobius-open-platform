@@ -1,44 +1,42 @@
-import { Injectable } from '@angular/core';
-import * as io from 'socket.io-client'
-import { Observable, Observer } from 'rxjs';
-import { UrlStore } from './server.url'; 
+import { Injectable } from "@angular/core";
+import * as io from "socket.io-client";
+import { Observable, Observer } from "rxjs";
+import { UrlStore } from "./server.url";
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class WebsocketService {
-
   /* for Progress bar */
   // private socket : SocketIOClient.Socket;
-  
-  constructor(private urlStore : UrlStore) { }
+
+  constructor(private urlStore: UrlStore) {}
 
   private socketList = {};
-  connect(){
-
+  connect() {
     var socket;
     socket = io(this.urlStore.serverSocket);
-  
-    socket.emit('conn');
 
-    socket.on('disconnect', () =>{
+    socket.emit("conn");
+
+    socket.on("disconnect", () => {
       // console.log(`[webSocketService.ts]\t:\t${aeid} web socket Disconnected!!!`);
       // delete this.socketList[aeid];
-    })
-    return Observable.create(observer => {
-      socket.on('requester', data => {
+    });
+    return Observable.create((observer) => {
+      socket.on("requester", (data) => {
         observer.next(data);
-      })
-    })
+      });
+    });
   }
 
-  disconnect(aename){
-    try{
+  disconnect(aename) {
+    try {
       var socket = this.socketList[aename];
-      if(socket){
+      if (socket) {
         socket.disconnect();
         delete this.socketList[aename];
       }
-    }catch(err){
+    } catch (err) {
       console.error(err);
       throw err;
     }

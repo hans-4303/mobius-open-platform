@@ -1,17 +1,14 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-var authManager = require('../managers/auth.manager.js')
-
-
-
+var authManager = require("../managers/auth.manager.js");
 
 /* GET virtual space listing. */
-router.post('/user', authManager.register);
+router.post("/user", authManager.register);
 
-router.post('/token', authManager.login);
+router.post("/token", authManager.login);
 
-router.use('/check', authManager.authCheck);
-router.get('/check', authManager.check);
+router.use("/check", authManager.authCheck);
+router.get("/check", authManager.check);
 
 module.exports = router;

@@ -1,23 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
-import { NotifierService } from 'angular-notifier';
+import { Injectable } from "@angular/core";
+import {
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  CanActivate,
+} from "@angular/router";
+import { Observable } from "rxjs";
+import { AuthService } from "./auth.service";
+import { NotifierService } from "angular-notifier";
 import { UrlStore } from "../services/serverURL";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-export class AuthGuardService implements  CanActivate{
+export class AuthGuardService implements CanActivate {
+  constructor(
+    private authService: AuthService,
+    private notifier: NotifierService,
+    private router: Router,
+    private urlStore: UrlStore
+  ) {}
 
-  constructor(private authService : AuthService, private notifier : NotifierService, private router : Router, private urlStore : UrlStore) {}
-
-  canActivate(next : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<boolean> | Promise<boolean> | boolean { 
-    if(this.authService.isLogin()){
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.authService.isLogin()) {
       return true;
-    }else{
+    } else {
       // this.notifier.notify('warning', '잘못된 접근입니다. 로그인을 해주세요');
-      window.location.href=this.urlStore.portalURL+"/#!/login";
+      window.location.href = this.urlStore.portalURL + "/#!/login";
       return false;
     }
   }

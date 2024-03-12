@@ -1,43 +1,55 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule, APP_INITIALIZER } from "@angular/core";
 
-import { AppRoutingModule } from './app-routing.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from "./app-routing.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { AdministorComponent, DialogUser } from './admin/administor/administor.component';
-import { CommandViewComponent } from './command-view/command-view.component';
+import { AppComponent } from "./app.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { RegisterComponent } from "./auth/register/register.component";
+import {
+  AdministorComponent,
+  DialogUser,
+} from "./admin/administor/administor.component";
+import { CommandViewComponent } from "./command-view/command-view.component";
 
-import { BotViewComponent } from './bot-view/bot-view.component';
-import { TopNaviComponent } from './top-navi/top-navi.component';
+import { BotViewComponent } from "./bot-view/bot-view.component";
+import { TopNaviComponent } from "./top-navi/top-navi.component";
 
 /* for Notificationi */
-import { NotifierModule } from 'angular-notifier';
+import { NotifierModule } from "angular-notifier";
 
 /* Custom Dialog */
-import { DialogAdd, DialogModify, DialogDelete } from './command-view/command-view.component';
-import { DialogBotListDelete } from './bot-view/bot-view.component';
-import { DialogHeaderLogout } from './top-navi/top-navi.component';
+import {
+  DialogAdd,
+  DialogModify,
+  DialogDelete,
+} from "./command-view/command-view.component";
+import { DialogBotListDelete } from "./bot-view/bot-view.component";
+import { DialogHeaderLogout } from "./top-navi/top-navi.component";
 /* Custom Serivce */
-import { CommandService } from './services/command.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CustomMaterialModule } from './core/custom-material.module';
-import { TokenHttpInterceptor } from './core/tokenHttpInterceptor';
-import { WebsocketService } from './services/websocket.service';
+import { CommandService } from "./services/command.service";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { CustomMaterialModule } from "./core/custom-material.module";
+import { TokenHttpInterceptor } from "./core/tokenHttpInterceptor";
+import { WebsocketService } from "./services/websocket.service";
 
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { BotViewDirective } from './bot-view/bot-view.directive';
-import { CommandMainComponent, DialogBotAdd, DialogBotDelete, BotRegisterGuide } from './command-main/command-main.component';
-import { CommandViewDirective } from './command-main/command-main.directive';
-import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { NotFoundComponent } from "./not-found/not-found.component";
+import { BotViewDirective } from "./bot-view/bot-view.directive";
+import {
+  CommandMainComponent,
+  DialogBotAdd,
+  DialogBotDelete,
+  BotRegisterGuide,
+} from "./command-main/command-main.component";
+import { CommandViewDirective } from "./command-main/command-main.directive";
+import { CookieService } from "ngx-cookie-service";
 
-import { UrlStore } from './services/server.url';
+import { UrlStore } from "./services/server.url";
 
-export function get_urls(urlLoader : UrlStore) {
+export function get_urls(urlLoader: UrlStore) {
   return () => urlLoader.loadURL();
 }
 
@@ -48,16 +60,16 @@ export function get_urls(urlLoader : UrlStore) {
     RegisterComponent,
     AdministorComponent,
     CommandViewComponent,
-    DialogAdd, 
-    DialogModify, 
-    DialogDelete, 
+    DialogAdd,
+    DialogModify,
+    DialogDelete,
     DialogBotListDelete,
     DialogHeaderLogout,
     DialogUser,
     DialogBotAdd,
     DialogBotDelete,
     BotRegisterGuide,
-    BotViewComponent, 
+    BotViewComponent,
     TopNaviComponent,
     NotFoundComponent,
     BotViewDirective,
@@ -65,10 +77,10 @@ export function get_urls(urlLoader : UrlStore) {
     CommandViewDirective,
     // BotMgmtComponent
   ],
-  entryComponents : [
+  entryComponents: [
     // Dialog
-    DialogAdd, 
-    DialogModify, 
+    DialogAdd,
+    DialogModify,
     DialogDelete,
     BotRegisterGuide,
     DialogBotListDelete,
@@ -77,7 +89,7 @@ export function get_urls(urlLoader : UrlStore) {
     DialogBotAdd,
     DialogBotDelete,
     BotViewComponent,
-    CommandViewComponent
+    CommandViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,10 +99,10 @@ export function get_urls(urlLoader : UrlStore) {
     FormsModule,
     ReactiveFormsModule,
     NotifierModule.withConfig({
-      position : {
-        horizontal : { position : 'middle', distance : 12 },
-        vertical : { position : 'top', distance : 12}
-      }
+      position: {
+        horizontal: { position: "middle", distance: 12 },
+        vertical: { position: "top", distance: 12 },
+      },
     }),
     // Angular Material modules
     CustomMaterialModule,
@@ -99,13 +111,18 @@ export function get_urls(urlLoader : UrlStore) {
   ],
   providers: [
     UrlStore,
-    {provide : APP_INITIALIZER, useFactory: get_urls, deps : [UrlStore],  multi : true},
-    {provide : HTTP_INTERCEPTORS, useClass : TokenHttpInterceptor, multi : true},
+    {
+      provide: APP_INITIALIZER,
+      useFactory: get_urls,
+      deps: [UrlStore],
+      multi: true,
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenHttpInterceptor, multi: true },
     //Custom Services
     CommandService,
     WebsocketService,
-    CookieService
+    CookieService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

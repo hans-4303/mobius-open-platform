@@ -1,16 +1,16 @@
-(function(){
-  'use strict';
-
+(function () {
+  "use strict";
 
   angular
-    .module('mobiusPortal')
-    .controller('deviceRegisterController', DeviceRegisterController)
-  ;
+    .module("mobiusPortal")
+    .controller("deviceRegisterController", DeviceRegisterController);
 
-
-
-  DeviceRegisterController.$inject = ['$scope', '$state', 'deviceService', 'alertService'];
-
+  DeviceRegisterController.$inject = [
+    "$scope",
+    "$state",
+    "deviceService",
+    "alertService",
+  ];
 
   var ICON_NAMES = [
     "fa-plane",
@@ -39,18 +39,22 @@
     "fa-thermometer-three-quarters",
     "fa-map",
     "fa-microphone",
-    "fa-battery-full"
+    "fa-battery-full",
   ];
 
-  function DeviceRegisterController($scope, $state, deviceService, alertService) {
-
+  function DeviceRegisterController(
+    $scope,
+    $state,
+    deviceService,
+    alertService
+  ) {
     $scope.iconList = ICON_NAMES;
 
     $scope.formData = {
-      "findResource": {
+      findResource: {
         aeName: "",
-        aeId: ""
-      }
+        aeId: "",
+      },
     };
 
     $scope.selectedAe = null;
@@ -58,71 +62,61 @@
       deviceInfo: {
         icon: "fa-home",
         nickname: "",
-        description: ""
+        description: "",
       },
       resourceInfo: {
         deviceName: "",
-        resourceId: ""
+        resourceId: "",
       },
-      acpList:[]
+      acpList: [],
     };
-
 
     $scope.deviceList = [];
     $scope.browserData = [];
-
 
     $scope.init = _init;
     $scope.findMobiusResource = _findMobiusResource;
     $scope.selectDeviceIcon = _selectDeviceIcon;
     $scope.addNewDevice = _addNewDevice;
 
-    function _init() {
+    function _init() {} //  end of function _init()
 
-
-
-
-    } //  end of function _init()
-
-
-    function _findMobiusResource(){
-
+    function _findMobiusResource() {
       $scope.selectedAe = null;
       $scope.newDevice.resourceInfo.resourceName = null;
 
-      deviceService.findAeResource($scope.formData.findResource.aeName, $scope.formData.findResource.aeId)
-        .then(function(aeObj){
-          $scope.$apply(function(){
-
-            $scope.selectedAe = aeObj['m2m:ae'];
-            $scope.newDevice.resourceInfo.resourceName = $scope.selectedAe.rn;
-            $scope.newDevice.resourceInfo.resourceId = $scope.selectedAe.ri;
-          })
-        }, function(err){
-          alertService.showErrorMessage(err);
-        });
+      deviceService
+        .findAeResource(
+          $scope.formData.findResource.aeName,
+          $scope.formData.findResource.aeId
+        )
+        .then(
+          function (aeObj) {
+            $scope.$apply(function () {
+              $scope.selectedAe = aeObj["m2m:ae"];
+              $scope.newDevice.resourceInfo.resourceName = $scope.selectedAe.rn;
+              $scope.newDevice.resourceInfo.resourceId = $scope.selectedAe.ri;
+            });
+          },
+          function (err) {
+            alertService.showErrorMessage(err);
+          }
+        );
     }
-
-
-
 
     function _selectDeviceIcon(icon) {
       $scope.newDevice.deviceInfo.icon = icon;
-
     }
-
 
     function _addNewDevice() {
-      deviceService.addNewDevice($scope.newDevice)
-      .then(function(result){
-        $state.go('main.device.device-list');
-      }, function(err){
-        alertService.showErrorMessage(err);
-      });
+      deviceService.addNewDevice($scope.newDevice).then(
+        function (result) {
+          $state.go("main.device.device-list");
+        },
+        function (err) {
+          alertService.showErrorMessage(err);
+        }
+      );
     }
-
   }
-
-
-
 })();

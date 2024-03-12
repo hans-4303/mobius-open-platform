@@ -1,9 +1,8 @@
-module.exports = class ImageDTO{
-    constructor() {
-        this.fileName = null;
-        this.version = null;
-        this.uploadDate = null;
-        this.filePath = null;
-
-    }
-}
+module.exports = class ImageDTO {
+  constructor() {
+    this.fileName = null;
+    this.version = null;
+    this.uploadDate = null;
+    this.filePath = null;
+  }
+};

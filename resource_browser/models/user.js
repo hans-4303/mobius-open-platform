@@ -1,18 +1,14 @@
 /**
- * 
+ *
  */
 
 //var dbConnection = require('../util/db-connection');
-var Promise = require('bluebird');
-var debug = require('debug')('keti');
+var Promise = require("bluebird");
+var debug = require("debug")("keti");
 
+var User = function () {};
 
-var User = function() {
-
-}
-
-
-User.listUsers = function() {
+User.listUsers = function () {
   /*
 
   return dbConnection.getConnection()
@@ -30,10 +26,9 @@ User.listUsers = function() {
     });
 
   */
-}
+};
 
-User.listSettings = function(userId) {
-
+User.listSettings = function (userId) {
   /*
   return dbConnection.getConnection()
     .then(function(conn) {
@@ -49,7 +44,6 @@ User.listSettings = function(userId) {
       throw err;
     });
   */
-}
-
+};
 
 module.exports = User;

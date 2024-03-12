@@ -3,30 +3,26 @@
  *
  *
  *
- *  Utilitiy service to help send and listen event between controllers 
- * 
+ *  Utilitiy service to help send and listen event between controllers
+ *
  */
-(function(){
-  'use strict';
+(function () {
+  "use strict";
 
-  angular
-    .module('onem2mResourceMonitor')
-    .service('eventService', EventService);
+  angular.module("onem2mResourceMonitor").service("eventService", EventService);
 
-  EventService.$inject = ['ModalService'];
+  EventService.$inject = ["ModalService"];
 
   function EventService(ModalService) {
-
-
     var services = {
       on: on,
-      off: off, 
+      off: off,
       emit: emit,
       broadcast: broadcast,
       showNoti: showNoti,
       showError: showError,
       showWaitforDialog: showWaitforDialog,
-      hideWaitforDialog: hideWaitforDialog
+      hideWaitforDialog: hideWaitforDialog,
     };
     return services;
 
@@ -41,52 +37,49 @@
     function emit(scope, mesg, args) {
       scope.$emit(mesg, args);
     }
-    
+
     function broadcast(scope, mesg, args) {
       scope.$broadcast(mesg, args);
     }
 
     function showNoti(text) {
       var notinyOptions = {
-        position: 'right-top',
-        theme: 'light',
-        animation_show: 'noti-show-animation 0.5s forwards',
-        animation_hide: 'noti-hide-animation 0.5s forwards'
-      }
+        position: "right-top",
+        theme: "light",
+        animation_show: "noti-show-animation 0.5s forwards",
+        animation_hide: "noti-hide-animation 0.5s forwards",
+      };
 
       notinyOptions.text = text;
 
-      $.notiny(notinyOptions); 
+      $.notiny(notinyOptions);
     }
 
     function showError(text) {
       var notinyOptions = {
-        position: 'right-top',
-        theme: 'error',
+        position: "right-top",
+        theme: "error",
         autohide: true,
         clickhide: true,
-        animation_show: 'noti-show-animation 0.5s forwards',
-        animation_hide: 'noti-hide-animation 0.5s forwards'
-      }
+        animation_show: "noti-show-animation 0.5s forwards",
+        animation_hide: "noti-hide-animation 0.5s forwards",
+      };
 
-
-      if(text.status) {
-        notinyOptions.text = '[' + text.status + '] ' + text.statusText;
-      }
-      else if(text.statusCode) {
-        notinyOptions.text = '[' + text.statusCode + '] ' + text.message;
-      }
-      else {
+      if (text.status) {
+        notinyOptions.text = "[" + text.status + "] " + text.statusText;
+      } else if (text.statusCode) {
+        notinyOptions.text = "[" + text.statusCode + "] " + text.message;
+      } else {
         notinyOptions.text = text;
       }
 
-      $.notiny(notinyOptions); 
+      $.notiny(notinyOptions);
     }
 
     function showWaitforDialog() {
-      $('#common-waitfor-modal').modal({backdrop: "static"});
+      $("#common-waitfor-modal").modal({ backdrop: "static" });
 
-/*
+      /*
       ModalService.showModal({
         templateUrl: '/app/modal/common.waitfor.html',
         controller: 'waitforModalController',
@@ -100,8 +93,7 @@
     }
 
     function hideWaitforDialog() {
-      $('#common-waitfor-modal').modal('hide');
-    }    
+      $("#common-waitfor-modal").modal("hide");
+    }
   }
-
 })();

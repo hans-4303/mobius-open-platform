@@ -1,26 +1,25 @@
 /**
  *
  *
- * "/user" route processor 
+ * "/user" route processor
  *
  * 로그인  /user/{userid}/token?password=xxx GET {userid}와 password를 이용하여 사용자 인증
  * 로그아웃  /user/{userid}/token  DELETE  {userid}에 해당하는 사용자 로그아웃, JWT session과 {userid} 비교 필요
- * 
- * 사용자 목록 조회 /user GET 
- * 
- * 사용자 정보 조회 /user/{userid}  GET 
- * 사용자 ID 중복검사 /user/{userid}  HEAD 
+ *
+ * 사용자 목록 조회 /user GET
+ *
+ * 사용자 정보 조회 /user/{userid}  GET
+ * 사용자 ID 중복검사 /user/{userid}  HEAD
  * 사용자 정보 수정 /user/{userid} PUT
  * 사용자 생성(가입)  /user/{userid} POST
  * 사용자 삭제(탈퇴)  /user/{userid} DELETE
  */
 
-var express = require('express');
-var debug = require('debug')('keti');
+var express = require("express");
+var debug = require("debug")("keti");
 
 var router = express.Router();
-var UserModel = require('../models/user');
-
+var UserModel = require("../models/user");
 
 /**
  * list all users
@@ -33,21 +32,18 @@ var UserModel = require('../models/user');
  *    @sort : identify ordering field
  *  - return (JSON)
  *    @users : Array of User object
- *    @from : first index to return 
+ *    @from : first index to return
  *    @last : last index to return
  *    @sort : identify ordering field
  */
-router.get('/', function(req, res, next) {
-
-  UserModel.listUsers()
-    .then(function(rows){
-      res.json(rows);
-    }) ;
+router.get("/", function (req, res, next) {
+  UserModel.listUsers().then(function (rows) {
+    res.json(rows);
+  });
 });
 
-
 /**
- * get user information 
+ * get user information
  *
  *  - required USER role
  *  - param
@@ -55,8 +51,8 @@ router.get('/', function(req, res, next) {
  *  - return (JSON)
  *    User object
  */
-router.get('/{userid}', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/{userid}", function (req, res, next) {
+  res.send("respond with a resource");
 });
 
 /**
@@ -68,10 +64,9 @@ router.get('/{userid}', function(req, res, next) {
  *  - return (BOOLEAN)
  *    "TRUE" if aleady exists, otherwise "FALSE"
  */
-router.get('/{userid}', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/{userid}", function (req, res, next) {
+  res.send("respond with a resource");
 });
-
 
 /**
  * create new user
@@ -84,8 +79,8 @@ router.get('/{userid}', function(req, res, next) {
  *  - return (JSON)
  *    User object
  */
-router.post('/{userid}', function(req, res, next) {
-  res.send('respond with a resource');
+router.post("/{userid}", function (req, res, next) {
+  res.send("respond with a resource");
 });
 
 /**
@@ -98,21 +93,19 @@ router.post('/{userid}', function(req, res, next) {
  *  - return (JSON)
  *    User object
  */
-router.put('/{userid}', function(req, res, next) {
-  res.send('respond with a resource');
+router.put("/{userid}", function (req, res, next) {
+  res.send("respond with a resource");
 });
-
 
 /**
  * delete user information
- * 
+ *
  *  - required USER role
  *  - return (JSON)
  *    User object
  */
-router.delete('/{userid}', function(req, res, next) {
-  res.send('respond with a resource');
+router.delete("/{userid}", function (req, res, next) {
+  res.send("respond with a resource");
 });
-
 
 module.exports = router;

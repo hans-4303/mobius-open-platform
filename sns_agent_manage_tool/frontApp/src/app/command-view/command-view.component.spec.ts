@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CommandViewComponent } from './command-view.component';
+import { CommandViewComponent } from "./command-view.component";
 
-describe('CommandViewComponent', () => {
+describe("CommandViewComponent", () => {
   let component: CommandViewComponent;
   let fixture: ComponentFixture<CommandViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommandViewComponent ]
-    })
-    .compileComponents();
+      declarations: [CommandViewComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('CommandViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

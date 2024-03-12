@@ -1,42 +1,46 @@
-(function(){
-  'use strict';
+(function () {
+  "use strict";
 
+  angular.module("dashboard").controller("authController", AuthController);
 
-  angular
-    .module('dashboard')
-    .controller('authController', AuthController)
-  ;
+  AuthController.$inject = [
+    "$scope",
+    "$state",
+    "$stateParams",
+    "authService",
+    "notificationService",
+  ];
 
-
-
-  AuthController.$inject = ['$scope', '$state', '$stateParams', 'authService', 'notificationService' ];
-
-
-  function AuthController($scope, $state, $stateParams, authService, notificationService) {
-
+  function AuthController(
+    $scope,
+    $state,
+    $stateParams,
+    authService,
+    notificationService
+  ) {
     $scope.formData = {
-      "login": {
-        "userId": "",
-        "password": "",
-        "type": "web"
+      login: {
+        userId: "",
+        password: "",
+        type: "web",
       },
 
-      "signup": {
-        "userName": "",
-        "userId": "",
-        "password": "",
-        "password2": ""
+      signup: {
+        userName: "",
+        userId: "",
+        password: "",
+        password2: "",
       },
 
-      "change": {
-        "password": "",
-        "password2": ""
+      change: {
+        password: "",
+        password2: "",
       },
 
-      "reset": {
-        "userId": ""
-      }
-    }
+      reset: {
+        userId: "",
+      },
+    };
 
     $scope.init = _init;
     $scope.login = _login;
@@ -48,117 +52,114 @@
     $scope.disableChangeButton = _disableChangeButton;
     $scope.showUserAgreementModal = _showUserAgreementModal;
 
-
-
-    function _init() {
-
-    }
+    function _init() {}
 
     function _login() {
-      var formData = $scope.formData['login'];
+      var formData = $scope.formData["login"];
 
-      formData.userId = (formData.userId === undefined) ? '' : formData.userId.trim();
-      if(!formData.userId) {
-        notificationService.showErrorMessage('Invalid userId. retry');
+      formData.userId =
+        formData.userId === undefined ? "" : formData.userId.trim();
+      if (!formData.userId) {
+        notificationService.showErrorMessage("Invalid userId. retry");
         return;
       }
 
-      if(!formData.password) {
-        notificationService.showErrorMessage('Invalid password. retry');
+      if (!formData.password) {
+        notificationService.showErrorMessage("Invalid password. retry");
         return;
       }
 
-      authService.login(formData.userId, formData.password, formData.type)
-        .then(function(user){
-          $state.go('device-all');
+      authService
+        .login(formData.userId, formData.password, formData.type)
+        .then(function (user) {
+          $state.go("device-all");
         })
-        .catch(function(err){
+        .catch(function (err) {
           notificationService.showErrorMessage(err.data);
 
-          $state.go('login');
+          $state.go("login");
         });
     } //  end of function _login()
 
-
     function _signup() {
-      var formData = $scope.formData['signup'];
+      var formData = $scope.formData["signup"];
 
-      formData.userName = (formData.userName === undefined) ? '' : formData.userName.trim();
-      if(!formData.userName) {
-        notificationService.showErrorMessage('Invalid userName. retry');
+      formData.userName =
+        formData.userName === undefined ? "" : formData.userName.trim();
+      if (!formData.userName) {
+        notificationService.showErrorMessage("Invalid userName. retry");
         return;
       }
 
-      formData.userId = (formData.userId === undefined) ? '' : formData.userId.trim();
-      if(!formData.userId) {
-        notificationService.showErrorMessage('Invalid email. retry');
+      formData.userId =
+        formData.userId === undefined ? "" : formData.userId.trim();
+      if (!formData.userId) {
+        notificationService.showErrorMessage("Invalid email. retry");
         return;
       }
 
-      if(!formData.password) {
-        notificationService.showErrorMessage('Invalid password. retry');
+      if (!formData.password) {
+        notificationService.showErrorMessage("Invalid password. retry");
         return;
       }
 
-
-      if(!formData.password2) {
-        notificationService.showErrorMessage('Invalid repeat password . retry');
+      if (!formData.password2) {
+        notificationService.showErrorMessage("Invalid repeat password . retry");
         return;
       }
 
-
-      if(formData.password !== formData.password2) {
-        notificationService.showErrorMessage('Password miss match. retry');
+      if (formData.password !== formData.password2) {
+        notificationService.showErrorMessage("Password miss match. retry");
         return;
       }
 
-
-      authService.signup(formData.userName, formData.userId, formData.password)
-        .then(function(user){
-
-          $state.go('login');
+      authService
+        .signup(formData.userName, formData.userId, formData.password)
+        .then(function (user) {
+          $state.go("login");
         })
-        .catch(function(err){
+        .catch(function (err) {
           notificationService.showErrorMessage(err);
-          $state.go('signup');
+          $state.go("signup");
         });
-
     } //  end of function _singup()
 
     function _passwordResetRequest() {
-      var formData = $scope.formData['reset'];
+      var formData = $scope.formData["reset"];
 
-      formData.userId = (formData.userId === undefined) ? '' : formData.userId.trim();
-      if(!formData.userId) {
-        notificationService.showErrorMessage('Invalid email. retry');
+      formData.userId =
+        formData.userId === undefined ? "" : formData.userId.trim();
+      if (!formData.userId) {
+        notificationService.showErrorMessage("Invalid email. retry");
         return;
       }
 
-      authService.requestResetPassword(formData.userId)
-        .then(function(user){
-          $state.go('main.dashboard');
+      authService
+        .requestResetPassword(formData.userId)
+        .then(function (user) {
+          $state.go("main.dashboard");
         })
-        .catch(function(err){
-
-          $state.go('login');
+        .catch(function (err) {
+          $state.go("login");
         });
     }
 
     function _changePassword() {
-      var formData = $scope.formData['change'];
+      var formData = $scope.formData["change"];
 
-      authService.changePassword($stateParams.token, formData.password, formData.password2)
-        .then(function(user){
-          $state.go('main.dashboard');
+      authService
+        .changePassword(
+          $stateParams.token,
+          formData.password,
+          formData.password2
+        )
+        .then(function (user) {
+          $state.go("main.dashboard");
         })
-        .catch(function(err){
-
-          $state.go('login');
+        .catch(function (err) {
+          $state.go("login");
         });
     }
-
-
-
 
     function _checkPasswordStrength(formName) {
       var formData = $scope.formData[formName];
@@ -169,30 +170,28 @@
     }
 
     function _disableSignupButton() {
+      if (!$scope.validPassword) return true;
 
-      if(!$scope.validPassword)
-        return true;
-
-      var formData = $scope.formData['signup'];
+      var formData = $scope.formData["signup"];
       formData.userName = formData.userName.trim();
-      if(!formData.userName) {
+      if (!formData.userName) {
         return true;
       }
 
       formData.userId = formData.userId.trim();
-      if(!formData.userId) {
+      if (!formData.userId) {
         return true;
       }
 
-      if(!formData.password) {
+      if (!formData.password) {
         return true;
       }
 
-      if(!formData.password2) {
+      if (!formData.password2) {
         return true;
       }
 
-      if(formData.password !== formData.password2) {
+      if (formData.password !== formData.password2) {
         return true;
       }
 
@@ -200,29 +199,25 @@
     }
 
     function _disableChangeButton() {
+      if (!$scope.validPassword) return true;
 
-      if(!$scope.validPassword)
-        return true;
-
-      var formData = $scope.formData['change'];
-      if(!formData.password) {
+      var formData = $scope.formData["change"];
+      if (!formData.password) {
         return true;
       }
 
-      if(!formData.password2) {
+      if (!formData.password2) {
         return true;
       }
 
-      if(formData.password !== formData.password2) {
+      if (formData.password !== formData.password2) {
         return true;
       }
 
       return false;
     }
 
-
     function _showUserAgreementModal(type) {
-
       // ModalService.showModal({
       //   templateUrl: "_auth/auth.agree.modal.html",
       //   controller: "authAgreeModalController",
@@ -237,7 +232,4 @@
       // });
     }
   }
-
-
-
 })();

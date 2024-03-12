@@ -2,70 +2,62 @@
  */
 "use strict";
 
-var timestamps = require('mongoose-timestamp');
-var mongoose = require('mongoose');
-var shortid = require('shortid');
+var timestamps = require("mongoose-timestamp");
+var mongoose = require("mongoose");
+var shortid = require("shortid");
 
 var Schema = mongoose.Schema;
 
 var DevicesSchema = new Schema({
-
-
   deviceId: {
     type: String,
     unique: true,
-    default: shortid.generate
+    default: shortid.generate,
   },
 
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: "users",
   },
 
   deviceInfo: {
     nickname: {
-      type: String
+      type: String,
     },
     icon: {
-      type: String
+      type: String,
     },
     description: {
-      type: String
+      type: String,
     },
     otaFeature: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   resourceInfo: {
     resourceName: {
-      type: String
+      type: String,
     },
 
     resourceId: {
-      type: String
+      type: String,
     },
 
     acpi: [
       {
-        type: String
-      }
-    ]
-  }
-
+        type: String,
+      },
+    ],
+  },
 });
 
 DevicesSchema.plugin(timestamps);
 
-
-
-DevicesSchema.methods.updateLastLogin = function(userId) {
-  this['lastLoginTime'] = new Date();
+DevicesSchema.methods.updateLastLogin = function (userId) {
+  this["lastLoginTime"] = new Date();
   return this.save();
 };
 
-
-
-
-module.exports = mongoose.model('devices', DevicesSchema);
+module.exports = mongoose.model("devices", DevicesSchema);

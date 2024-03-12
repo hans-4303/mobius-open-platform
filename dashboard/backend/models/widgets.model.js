@@ -1,24 +1,23 @@
-const mongoose    = require('mongoose');
-const timestamps  = require('mongoose-timestamp');
-const shortid     = require('shortid');
-const _           = require('lodash');
-const DatasourceModel  = require('./datasource.model.js');
-const debugLog    = require('debug')('keti');
+const mongoose = require("mongoose");
+const timestamps = require("mongoose-timestamp");
+const shortid = require("shortid");
+const _ = require("lodash");
+const DatasourceModel = require("./datasource.model.js");
+const debugLog = require("debug")("keti");
 global.debug = {
-  log: debugLog
+  log: debugLog,
 };
 
 const Schema = mongoose.Schema;
 
-
 const WidgetsModel = new Schema({
   widgetId: {
     type: String,
-    default: shortid.generate
+    default: shortid.generate,
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User",
   },
   widgetType: String,
   title: String,
@@ -31,8 +30,7 @@ const WidgetsModel = new Schema({
 });
 
 // create new widget document
-WidgetsModel.statics.createWidget = function(owner, widgetInfo) {
-
+WidgetsModel.statics.createWidget = function (owner, widgetInfo) {
   var widgetTemplate = {
     owner: owner,
     widgetType: widgetInfo.widgetType,
@@ -41,237 +39,205 @@ WidgetsModel.statics.createWidget = function(owner, widgetInfo) {
     height: widgetInfo.height,
     order: 100000,
     triggerInfo: widgetInfo.triggerInfo,
-    workspace: widgetInfo.workspace
+    workspace: widgetInfo.workspace,
   };
-
 
   var widget = new this(widgetTemplate);
 
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     try {
       DatasourceModel.findDatasource(owner, widgetInfo.datasourceId)
-      .then((datasource)=>{
-        widget.datasource = datasource;
+        .then((datasource) => {
+          widget.datasource = datasource;
 
-        return widget.save();
-      })
+          return widget.save();
+        })
 
-      .then((widget)=>{
-        resolve(widget);
-      })
+        .then((widget) => {
+          resolve(widget);
+        })
 
-      .catch((err)=>{
-        reject(err);
-      });
-    }
-    catch(ex) {
+        .catch((err) => {
+          reject(err);
+        });
+    } catch (ex) {
       reject(ex);
     }
   });
-
 };
-
 
 // delete widget document
-WidgetsModel.statics.deleteWidget = function(owner, widgetId) {
-
-  return this.deleteOne({"owner": owner, "widgetId": widgetId});
-
+WidgetsModel.statics.deleteWidget = function (owner, widgetId) {
+  return this.deleteOne({ owner: owner, widgetId: widgetId });
 };
 
-
-
 // create new Things document
-WidgetsModel.statics.listWidgets = function(owner) {
-
-  return new Promise((resolve, reject)=>{
-
+WidgetsModel.statics.listWidgets = function (owner) {
+  return new Promise((resolve, reject) => {
     var _widget = null;
 
     try {
-      this.find({owner:owner}).sort({ "order": 1 }).exec()
-        .then((widgetListDoc)=>{
-
+      this.find({ owner: owner })
+        .sort({ order: 1 })
+        .exec()
+        .then((widgetListDoc) => {
           resolve(widgetListDoc);
         })
 
-        .catch((err)=>{
+        .catch((err) => {
           reject(err);
         });
-    }
-    catch(ex) {
+    } catch (ex) {
       reject(ex);
     }
   });
-
 };
 
 // create new Things document
-WidgetsModel.statics.getWidget = function(owner, widgetId) {
-
-  return new Promise((resolve, reject)=>{
-
+WidgetsModel.statics.getWidget = function (owner, widgetId) {
+  return new Promise((resolve, reject) => {
     var _widget = null;
 
     try {
-      this.findOne({owner:owner, widgetId:widgetId}).exec()
-        .then((widgetDoc)=>{
-
+      this.findOne({ owner: owner, widgetId: widgetId })
+        .exec()
+        .then((widgetDoc) => {
           resolve(widgetDoc);
         })
 
-        .catch((err)=>{
+        .catch((err) => {
           reject(err);
         });
-    }
-    catch(ex) {
+    } catch (ex) {
       reject(ex);
     }
   });
-
 };
 
 // update or create Things document
-WidgetsModel.statics.upsertWidget = function(owner, widgetId, updateData) {
-
-  return new Promise((resolve, reject)=>{
+WidgetsModel.statics.upsertWidget = function (owner, widgetId, updateData) {
+  return new Promise((resolve, reject) => {
     try {
-
       var key = {
         owner: owner,
-        widgetId: widgetId
+        widgetId: widgetId,
       };
 
       var upsertData = _.clone(key);
       _.extend(upsertData, updateData);
 
-      this.findOneAndUpdate(key, {$set: upsertData}, {upsert: true, new: true})
+      this.findOneAndUpdate(
+        key,
+        { $set: upsertData },
+        { upsert: true, new: true }
+      )
 
-        .then((widgetDoc)=>{
-
+        .then((widgetDoc) => {
           resolve(widgetDoc);
         })
-        .catch((err)=>{
+        .catch((err) => {
           reject(err);
-        })
-        ;
-    }
-    catch(ex) {
+        });
+    } catch (ex) {
       reject(ex);
     }
   });
-
 };
 
-
 // update or create Things document
-WidgetsModel.statics.updateWidgetData = function(owner, widgetId, widgetData) {
-
-  return new Promise((resolve, reject)=>{
+WidgetsModel.statics.updateWidgetData = function (owner, widgetId, widgetData) {
+  return new Promise((resolve, reject) => {
     try {
-
       var key = {
         owner: owner,
-        widgetId: widgetId
+        widgetId: widgetId,
       };
 
-      this.findOne(key).exec()
-        .then((widgetDoc)=>{
-
-          if(widgetDoc) {
-            widgetDoc['widgetData'] = widgetData;
+      this.findOne(key)
+        .exec()
+        .then((widgetDoc) => {
+          if (widgetDoc) {
+            widgetDoc["widgetData"] = widgetData;
             widgetDoc.save();
-          }
-          else {
+          } else {
             return widgetDoc;
           }
         })
 
-        .then((widgetDoc)=>{
+        .then((widgetDoc) => {
           resolve(widgetDoc);
         })
-        
-        .catch((err)=>{
+
+        .catch((err) => {
           reject(err);
-        })
-        ;
-    }
-    catch(ex) {
+        });
+    } catch (ex) {
       reject(ex);
     }
   });
-
 };
 
-
 // update or create Things document
-WidgetsModel.statics.updateWidgetOrder = function(owner, widgetIdList) {
-
-  return new Promise((resolve, reject)=>{
+WidgetsModel.statics.updateWidgetOrder = function (owner, widgetIdList) {
+  return new Promise((resolve, reject) => {
     try {
+      Promise.all(
+        widgetIdList.map((widgetId, index) => {
+          var key = {
+            owner: owner,
+            widgetId: widgetId,
+          };
+          var updateData = {
+            order: index,
+          };
 
-      Promise.all(widgetIdList.map((widgetId, index)=>{
-        var key = {
-          owner: owner,
-          widgetId: widgetId
-        };
-        var updateData = {
-          order: index
-        };
-
-        return this.findOneAndUpdate(key, {$set: updateData}, {upsert: false, new: false})
-      }))
-      .then((result)=>{
+          return this.findOneAndUpdate(
+            key,
+            { $set: updateData },
+            { upsert: false, new: false }
+          );
+        })
+      ).then((result) => {
         resolve(widgetIdList);
-      })
-    }
-    catch(ex) {
+      });
+    } catch (ex) {
       reject(ex);
     }
   });
-
 };
 
-
 // update or create Things document
-WidgetsModel.statics.updateWidgetData = function(owner, widgetId, widgetData) {
-
-  return new Promise((resolve, reject)=>{
+WidgetsModel.statics.updateWidgetData = function (owner, widgetId, widgetData) {
+  return new Promise((resolve, reject) => {
     try {
-
       var key = {
         owner: owner,
-        widgetId: widgetId
+        widgetId: widgetId,
       };
 
-      this.findOne(key).exec()
-        .then((widgetDoc)=>{
-
-          if(widgetDoc) {
-            widgetDoc['widgetData'] = widgetData;
+      this.findOne(key)
+        .exec()
+        .then((widgetDoc) => {
+          if (widgetDoc) {
+            widgetDoc["widgetData"] = widgetData;
             widgetDoc.save();
-          }
-          else {
+          } else {
             return widgetDoc;
           }
         })
 
-        .then((widgetDoc)=>{
+        .then((widgetDoc) => {
           resolve(widgetDoc);
         })
-        
-        .catch((err)=>{
+
+        .catch((err) => {
           reject(err);
-        })
-        ;
-    }
-    catch(ex) {
+        });
+    } catch (ex) {
       reject(ex);
     }
   });
-
 };
-
 
 WidgetsModel.plugin(timestamps);
-module.exports = mongoose.model('Widgets', WidgetsModel);
+module.exports = mongoose.model("Widgets", WidgetsModel);

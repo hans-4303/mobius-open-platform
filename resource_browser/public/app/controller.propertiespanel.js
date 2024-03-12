@@ -1,69 +1,74 @@
-(function(){
-  'use strict';
+(function () {
+  "use strict";
 
   angular
-    .module('onem2mResourceMonitor')
-    .controller('propertiesPanelController', PropertiesPanelController);
+    .module("onem2mResourceMonitor")
+    .controller("propertiesPanelController", PropertiesPanelController);
 
-    PropertiesPanelController.$inject = ['$scope', '$rootScope', 'store', 'resmonService', 'eventService'];
+  PropertiesPanelController.$inject = [
+    "$scope",
+    "$rootScope",
+    "store",
+    "resmonService",
+    "eventService",
+  ];
 
+  /**
+   * [PropertiesPanelController description]
+   * @param {[type]} $scope        [description]
+   * @param {[type]} resmonService [description]
+   *
+   *
+   * View 생성 및 UI control event 처리
+   *   onem2m server와의 통신은 onem2mService에 deligate
+   *   resource monitor server와의 통신은 resmonService에 deligate
+   */
+  function PropertiesPanelController(
+    $scope,
+    $rootScope,
+    store,
+    resmonService,
+    eventService
+  ) {
+    $scope.rawData = {};
+    $scope.showPanel = true;
 
-    /**
-     * [PropertiesPanelController description]
-     * @param {[type]} $scope        [description]
-     * @param {[type]} resmonService [description]
-     *
-     *
-     * View 생성 및 UI control event 처리 
-     *   onem2m server와의 통신은 onem2mService에 deligate
-     *   resource monitor server와의 통신은 resmonService에 deligate 
-     */
-    function PropertiesPanelController($scope, $rootScope, store, resmonService, eventService) {
+    //
+    //  scope functions
+    //
+    //////////////////////////////
+    $scope.init = initScope;
+    $scope.toggleShowHide = toggleShowHide;
 
+    //
+    //  implements functions
+    //
+    /////////////////////////////////
+    function initScope() {
+      //  register event listeners
+      //eventService.on($rootScope, 'monitoring.start', onMonitoringStartRequest);
 
-      $scope.rawData = {};
-      $scope.showPanel = true;
+      eventService.on(
+        $rootScope,
+        "monitoring.select.resource",
+        onSelectResourceRequest
+      );
+    }
 
-      //
-      //  scope functions 
-      //  
-      //////////////////////////////
-      $scope.init = initScope;
-      $scope.toggleShowHide = toggleShowHide;
+    function toggleShowHide() {
+      $scope.showPanel = !$scope.showPanel;
 
-
-      //
-      //  implements functions 
-      //
-      /////////////////////////////////
-      function initScope() {
-        //  register event listeners
-        //eventService.on($rootScope, 'monitoring.start', onMonitoringStartRequest);
-
-        eventService.on($rootScope, 'monitoring.select.resource', onSelectResourceRequest);
-
-
+      if ($scope.showPanel) {
+        $(".monitor-view-side").removeClass("collapsed");
+      } else {
+        $(".monitor-view-side").addClass("collapsed");
       }
+    }
 
-      function toggleShowHide() {
-        $scope.showPanel = !$scope.showPanel;
-
-        if( $scope.showPanel ) {
-          $(".monitor-view-side").removeClass("collapsed");
-        }
-        else {
-          $(".monitor-view-side").addClass("collapsed");
-        }
-      }
-
-      function onSelectResourceRequest(event, arg) {
-        $scope.$apply(function () {
-          $scope.rawData = arg;
-        });
-      }
-
-
-    };
-
-
+    function onSelectResourceRequest(event, arg) {
+      $scope.$apply(function () {
+        $scope.rawData = arg;
+      });
+    }
+  }
 })();
